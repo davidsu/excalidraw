@@ -2092,6 +2092,9 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasDoubleClick = (
     event: React.MouseEvent<HTMLCanvasElement>,
   ) => {
+    if (this.state.lastPointerDownWith !== "pen") {
+      return;
+    }
     // case: double-clicking with arrow/line tool selected would both create
     // text and enter multiElement mode
     if (this.state.multiElement) {
@@ -2433,7 +2436,10 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     this.setState({
-      lastPointerDownWith: event.pointerType,
+      lastPointerDownWith:
+        event.pointerType === "touch" && event.width === 0
+          ? "pen"
+          : event.pointerType,
       cursorButton: "down",
     });
     this.savePointer(event.clientX, event.clientY, "down");
@@ -2472,6 +2478,9 @@ class App extends React.Component<AppProps, AppState> {
       return;
     }
 
+    if (event.width !== 0) {
+      return;
+    }
     if (this.state.elementType === "text") {
       this.handleTextOnPointerDown(event, pointerDownState);
       return;
@@ -3020,6 +3029,9 @@ class App extends React.Component<AppProps, AppState> {
     elementType: ExcalidrawFreeDrawElement["type"],
     pointerDownState: PointerDownState,
   ) => {
+    if (event.width !== 0) {
+      return;
+    }
     // Begin a mark capture. This does not have to update state yet.
     const [gridX, gridY] = getGridPoint(
       pointerDownState.origin.x,
