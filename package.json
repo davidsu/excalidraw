@@ -92,7 +92,7 @@
   "scripts": {
     "build-node": "node ./scripts/build-node.js",
     "build:app:docker": "REACT_APP_DISABLE_SENTRY=true react-scripts build",
-    "build:app": "REACT_APP_GIT_SHA=$VERCEL_GIT_COMMIT_SHA react-scripts build",
+    "build:app": "REACT_APP_GIT_SHA=$(git rev-parse HEAD) react-scripts build",
     "build:version": "node ./scripts/build-version.js",
     "build": "yarn build:app && yarn build:version",
     "eject": "react-scripts eject",
@@ -113,6 +113,6 @@
     "test:update": "yarn test:app --updateSnapshot --watchAll=false",
     "test": "yarn test:app",
     "autorelease": "node scripts/autorelease.js",
-    "deploy": "npm run build && surge build https://www.excalidraw-davidsu.surge.sh"
+    "deploy": "rm -rf build; npm run build && surge build https://excalidraw-davidsu.surge.sh/"
   }
 }

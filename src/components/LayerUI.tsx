@@ -694,12 +694,12 @@ const LayerUI = ({
           className={clsx(
             "layer-ui__wrapper__footer-left zen-mode-transition",
             {
-              "layer-ui__wrapper__footer-left--transition-left": zenModeEnabled,
+              "layer-ui__wrapper__footer-left--transition-left": false,
             },
           )}
         >
           <button onClick={toggleZenMode}>
-            {zenModeEnabled ? "++++++++++++++++" : "Zen"}
+            {zenModeEnabled ? "All" : "Zen"}
           </button>
           <Stack.Col gap={2}>
             <Section heading="canvasActions">
@@ -712,7 +712,7 @@ const LayerUI = ({
               {!viewModeEnabled && (
                 <div
                   className={clsx("undo-redo-buttons zen-mode-transition", {
-                    "layer-ui__wrapper__footer-left--transition-bottom": zenModeEnabled,
+                    "layer-ui__wrapper__footer-left--transition-bottom": false,
                   })}
                 >
                   {actionManager.renderAction("undo", { size: "small" })}
